@@ -11,15 +11,26 @@ function getComments(){
   return dataComments;
 }
 
-const comments = getComments();
-
-
+const datosComments = getComments();
 
 app.get('/api/comments', (req, res)=>{
+  console.log(req.query.user);
+  if(req.query.user){
+    let userId = req.query.user;
+/*     let nombre = req.query.nombre;
+    res.json(userId + nombre); */
+   res.json(datosComments.filter(comment => comment.postId == parseInt(userId))) 
+  }else{
+    res.json(datosComments);
+    res.end();
+  }
+});
+
+/* app.get('/api/comments', (req, res)=>{
   const postId = req.query.postId;
   res.json(comments.filter(comment => !postId || comment.postId == parseInt(postId)));
   res.end();   
-}); 
+});  */
 
 /* res.json(comments);
 res.end(); */
